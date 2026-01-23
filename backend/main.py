@@ -4,6 +4,8 @@ from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from sqlalchemy.orm import Mapped, mapped_column
+from flask_migrate import Migrate   
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +15,7 @@ class Base(DeclarativeBase):
   pass
 
 db = SQLAlchemy(app, model_class=Base)
+migrate = Migrate(app, db)   
 
 class TodoItem(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -26,9 +29,7 @@ class TodoItem(db.Model):
             "done": self.done
         }
 
-with app.app_context():
-    db.create_all()
-
+"""
 INITIAL_TODOS = [
     TodoItem(title='Learn Flask'),
     TodoItem(title='Build a Flask App'),
@@ -36,9 +37,10 @@ INITIAL_TODOS = [
 
 with app.app_context():
     if TodoItem.query.count() == 0:
-         for item in INITIAL_TODOS:
-             db.session.add(item)
-         db.session.commit()
+        for item in INITIAL_TODOS:
+            db.session.add(item)
+        db.session.commit()
+"""
 
 todo_list = [
     { "id": 1,
@@ -84,4 +86,4 @@ def delete_todo(id):
     todo = TodoItem.query.get_or_404(id)
     db.session.delete(todo)
     db.session.commit()
-    return jsonify({'message': 'Todo deleted successfully'})
+    return jsonify({'message': 'Todo deleted successfully'})    
