@@ -21,7 +21,7 @@ describe('App', () => {
   it('renders correctly', async () => {
     global.fetch.mockImplementationOnce(() =>
       mockResponse([
-        { id: 1, title: 'First todo', done: false, comments: [] },
+        { id: 1, title: 'First todoooooo', done: false, comments: [] },
         { id: 2, title: 'Second todo', done: false, comments: [
           { id: 1, message: 'First comment' },
           { id: 2, message: 'Second comment' },
