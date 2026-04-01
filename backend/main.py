@@ -10,11 +10,14 @@ import click
 from models import User
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_jwt_extended import JWTManager
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todos.db'
-app.config['JWT_SECRET_KEY'] = 'fdsjkfjioi2rjshr2345hrsh043j5oij5545'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI','sqlite:///todos.db') 
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY','fdslkfjsdlkufewhjroiewurewrew')
 jwt = JWTManager(app)
 
 
